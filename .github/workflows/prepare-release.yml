@@ -68,11 +68,11 @@ jobs:
       - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: release/${{ inputs.version }}
+          HEAD_BRANCH: release/${{ inputs.version || steps.get-new-version.outputs.new_version }}
           BASE_BRANCH: ${{ env.MAIN_BRANCH }}
-          TITLE: v${{ inputs.version }}
+          TITLE: v${{ inputs.version || steps.get-new-version.outputs.new_version }}
           BODY: |
-            v${{ inputs.version }}
+            v${{ inputs.version || steps.get-new-version.outputs.new_version }}
 
             > This PR was created by @${{ github.actor }} with manual trigger.
         run: gh pr create --head $HEAD_BRANCH --base $BASE_BRANCH --title "$TITLE" --body "$BODY"
