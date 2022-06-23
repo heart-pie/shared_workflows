@@ -19,9 +19,7 @@ on:
         description: 'Whether the workflow run should try to fix automatically'
         type: boolean
         default: false
-    secrets:
-      NPM_TOKEN:
-        required: true
+      secrets: inherit
 
 jobs:
   run-linters:
