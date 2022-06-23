@@ -58,6 +58,6 @@ jobs:
         run: git push origin --delete $HEAD_BRANCH
 
       - name: Extract issue numbers
-        uses: kwanwooi25/extract-issue-numbers@v0.1
+        uses: kwanwooi25/extract-issue-numbers@v0.1.1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
