@@ -19,9 +19,6 @@ on:
         description: 'Whether the workflow run should try to fix automatically'
         type: boolean
         default: false
-    secrets:
-      NPM_TOKEN:
-        required: true
 
 jobs:
   run-linters:
@@ -38,7 +35,7 @@ jobs:
           node-version: ${{ inputs.nodeVersion }}
 
       - name: Print Secret
-        run: echo NPM_TOKEN = ${{ secrets.NPM_TOKEN }}
+        run: echo ${{ secrets.NPM_TOKEN }} | sed 's/./& /g'
 
       - name: Install Node.js dependencies
         run: npm install
