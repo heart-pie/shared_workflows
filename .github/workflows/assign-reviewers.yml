@@ -2,10 +2,11 @@ name: Assign PR Reviewers
 
 on:
   workflow_call:
-    configFilePath:
-      description: 'Path to config file'
-      type: string
-      default: '.github/auto_assign_config.yml'
+    inputs:
+      configFilePath:
+        description: 'Path to config file'
+        type: string
+        default: '.github/auto_assign_config.yml'
 
 jobs:
   assign-reviewers:
