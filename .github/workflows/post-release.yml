@@ -56,3 +56,6 @@ jobs:
 
       - name: Delete Head Branch (${{ env.HEAD_BRANCH }})
         run: git push origin --delete $HEAD_BRANCH
+
+      - name: Print pr number
+        run: echo ${{ github.event.pull_request.number }}
