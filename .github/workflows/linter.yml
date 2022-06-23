@@ -52,3 +52,6 @@ jobs:
           auto_fix: ${{ inputs.autoFix }}
           eslint_args: ${{ inputs.eslintArgs }}
           eslint_extensions: ${{ inputs.eslintExtensions }}
+
+      - name: TSC
+        uses: icrawl/action-tsc@v1
