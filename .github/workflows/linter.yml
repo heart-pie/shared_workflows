@@ -19,7 +19,6 @@ on:
         description: 'Whether the workflow run should try to fix automatically'
         type: boolean
         default: false
-    secrets: inherit
 
 jobs:
   run-linters:
