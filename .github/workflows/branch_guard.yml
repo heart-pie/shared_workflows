@@ -1,0 +1,39 @@
+name: Branch Guard
+
+on:
+  workflow_call:
+    inputs:
+      mainBranch:
+        description: Branch name for production releases
+        default: main
+      devBranch:
+        description: Branch name for development
+        default: develop
+      featureBranch:
+        description: Branch name prefix for feature
+        default: feature
+      releaseBranch:
+        description: Branch name prefix for release
+        default: release
+      hotfixBranch:
+        description: Branch name prefix for hotfix
+        default: hotfix
+      prefixSeparator:
+        description: Branch name prefix separator
+        default: /
+
+jobs:
+  branch-guard:
+    name: Check if the base branch is correct
+    runs-on: ubuntu-latest
+    steps:
+      - name: Branch Guard
+        uses: kwanwooi25/pr-to-right-branch@v0.2.2
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mainBranch: ${{ inputs.mainBranch }}
+          devBranch: ${{ inputs.devBranch }}
+          featureBranch: ${{ inputs.featureBranch }}
+          releaseBranch: ${{ inputs.releaseBranch }}
+          hotfixBranch: ${{ inputs.hotfixBranch }}
+          prefixSeparator: ${{ inputs.prefixSeparator }}
