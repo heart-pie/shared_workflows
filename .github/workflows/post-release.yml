@@ -11,6 +11,14 @@ on:
         description: 'Develop branch name'
         type: string
         default: develop
+      jiraProjectKey:
+        description: 'Jira project key'
+        type: string
+        required: true
+      jiraVersionPrefix:
+        description: 'Jira version prefix'
+        type: string
+        required: true
 
 permissions: write-all
 
@@ -58,6 +66,19 @@ jobs:
         run: git push origin --delete $HEAD_BRANCH
 
       - name: Extract issue numbers
-        uses: kwanwooi25/extract-issue-numbers@v0.1.1
+        id: issue-numbers
+        uses: kwanwooi25/extract-issue-numbers@v0.2
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: JIRA release
+        uses: kwanwooi25/jira-release@v0.1
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          jiraHost: ${{ secrets.JIRA_HOST }}
+          jiraEmail: ${{ secrets.JIRA_EMAIL }}
+          jiraApiToken: ${{ secrets.JIRA_API_TOKEN }}
+          jiraProjectKey: ${{ inputs.jiraProjectKey }}
+          jiraVersionPrefix: ${{ inputs.jiraVersionPrefix }}
+          jiraReleaseVersion: ${{ env.PACKAGE_VERSION }}
+          jiraIssueKeys: ${{ steps.issue-numbers.outputs.issueNumbers }}
