@@ -1,0 +1,51 @@
+name: Linter
+
+on:
+  workflow_call:
+    inputs:
+      nodeVersion:
+        description: 'Node.js version'
+        type: number
+        required: true
+      eslintArgs:
+        description: 'Additional arguments to pass to the linter'
+        type: string
+        default: '--max-warnings 0'
+      eslintExtensions:
+        description: 'File extensions to check with the linter'
+        type: string
+        default: 'ts,tsx'
+      autoFix:
+        description: 'Whether the workflow run should try to fix automatically'
+        type: boolean
+        default: false
+
+jobs:
+  run-linters:
+    name: Run Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ inputs.nodeVersion }}
+
+      - name: Print Secret
+        run: echo NPM_TOKEN = ${{ secrets.NPM_TOKEN }}
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run Linters
+        uses: wearerequired/lint-action@v2
+        with:
+          github_token: ${{ secrets.github_token }}
+          eslint: true
+          prettier: true
+          auto_fix: ${{ inputs.autoFix }}
+          eslint_args: ${{ inputs.eslintArgs }}
+          eslint_extensions: ${{ inputs.eslintExtensions }}
