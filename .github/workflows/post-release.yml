@@ -19,6 +19,10 @@ on:
         description: 'Jira version prefix'
         type: string
         required: true
+      jiraShouldRelease:
+        description: 'Whether release jira version'
+        type: boolean
+        default: true
 
 permissions: write-all
 
@@ -72,7 +76,7 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: JIRA release
-        uses: kwanwooi25/jira-release@v0.1
+        uses: kwanwooi25/jira-release@v0.2
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           jiraHost: ${{ secrets.JIRA_HOST }}
@@ -82,3 +86,4 @@ jobs:
           jiraVersionPrefix: ${{ inputs.jiraVersionPrefix }}
           jiraReleaseVersion: ${{ env.PACKAGE_VERSION }}
           jiraIssueKeys: ${{ steps.issue-numbers.outputs.issueNumbers }}
+          shouldRelease: ${{ inputs.jiraShouldRelease }}
